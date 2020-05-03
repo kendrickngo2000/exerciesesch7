@@ -1,0 +1,27 @@
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+char* pname(char* name) {
+	return name[0] == '.' ? strrchr(name, '/') + 1 : name;
+}
+
+int main(int argc, char* argv[]) {
+	int c;
+	int(*func)(int);
+	char* progs;
+
+	--argc;
+	progs = pname(argv[0]);
+	if (!strcmp("tolower", progs))
+		func = tolower;
+	else if(!strcmp("toupper", progs))
+		func = toupper;
+	else {
+		printf("Error: rename program\n");
+		return -1;
+	}
+	while ((c = getchar()) != EOF)
+		putchar(func(c));
+	return 0;
+}
